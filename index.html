@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>DATABASE ONE STUDENT FOUR ACHIEVEMENT</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Perbaiki meta viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -17,14 +17,14 @@
       <table class="min-w-full divide-y divide-gray-200 text-xs sm:text-sm">
         <thead class="bg-gray-100">
           <tr>
-            <th class="px-2 sm:px-4 py-2 text-left font-bold">BIDANG</th>
-            <th class="px-2 sm:px-4 py-2 text-left font-bold">PENYELENGGARA</th>
-            <th class="px-2 sm:px-4 py-2 text-left font-bold">NAMA LOMBA</th>
-            <th class="px-2 sm:px-4 py-2 text-left font-bold">PENDAFTARAN</th>
-            <th class="px-2 sm:px-4 py-2 text-left font-bold">DEADLINE</th>
-            <th class="px-2 sm:px-4 py-2 text-left font-bold">PELAKSANAAN</th>
-            <th class="px-2 sm:px-4 py-2 text-left font-bold">LINK</th>
-            <th class="px-2 sm:px-4 py-2 text-left font-bold">BIAYA</th>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold cursor-pointer" data-column="0">BIDANG</th>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold cursor-pointer" data-column="1">PENYELENGGARA</th>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold cursor-pointer" data-column="2">NAMA LOMBA</th>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold cursor-pointer" data-column="3">PENDAFTARAN</th>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold cursor-pointer" data-column="4">DEADLINE</th>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold cursor-pointer" data-column="5">PELAKSANAAN</th>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold cursor-pointer" data-column="6">LINK</th>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold cursor-pointer" data-column="7">BIAYA</th>
           </tr>
         </thead>
         <tbody id="competition-body" class="bg-white divide-y divide-gray-200">
@@ -37,12 +37,12 @@
     <p class="mt-4 text-xs sm:text-sm text-gray-500 text-center">TIM KEMURIDAN SMA ISLAM AL AZHAR 16 SEMARANG @2025.</p>
   </div>
   <script>
-    // Ganti dengan ID dan API Key spreadsheet kamu
     const SPREADSHEET_ID = '1gOYHXppCIeZ6P6KF5EaUeCQ_jmOxqHg--So6l5qFpYY';
     const API_KEY = 'AIzaSyB3bmGApM7NO4jjwi3eOKCNhUkvDkMwyKw';
-    const RANGE = 'RUNNING!B3:K'; // Nama sheet dan range
+    const RANGE = 'RUNNING!B3:K';
 
     let competitions = [];
+    let currentSort = { column: null, ascending: true };
 
     async function fetchCompetitions() {
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`;
@@ -61,7 +61,6 @@
       }
       data.forEach((row, i) => {
         const [field, organizer, name, regDate, deadline, eventDate, link, fee] = row;
-        // Cek dan tambahkan https:// hanya jika link tidak diawali http/https
         let fixedLink = link;
         if (link && !/^https?:\/\//i.test(link)) {
           fixedLink = 'https://' + link;
@@ -85,15 +84,53 @@
     document.getElementById('search').addEventListener('input', function(e) {
       const keyword = e.target.value.toLowerCase();
       const filtered = competitions.filter(row =>
-        row[0]?.toLowerCase().includes(keyword) || // Nama Lomba
-        row[1]?.toLowerCase().includes(keyword)    // Bidang
+        row[0]?.toLowerCase().includes(keyword) || // Bidang
+        row[1]?.toLowerCase().includes(keyword) || // Penyelenggara
+        row[2]?.toLowerCase().includes(keyword)    // Nama Lomba
       );
       renderTable(filtered);
+    });
+
+    function sortTable(columnIndex) {
+      if (currentSort.column === columnIndex) {
+        currentSort.ascending = !currentSort.ascending;
+      } else {
+        currentSort.column = columnIndex;
+        currentSort.ascending = true;
+      }
+
+      const sorted = [...competitions].sort((a, b) => {
+        const valA = (a[columnIndex] || '').toLowerCase();
+        const valB = (b[columnIndex] || '').toLowerCase();
+
+        if (!isNaN(valA) && !isNaN(valB)) {
+          return currentSort.ascending ? Number(valA) - Number(valB) : Number(valB) - Number(valA);
+        }
+        return currentSort.ascending ? valA.localeCompare(valB) : valB.localeCompare(valA);
+      });
+
+      updateHeaderIndicators();
+      renderTable(sorted);
+    }
+
+    function updateHeaderIndicators() {
+      document.querySelectorAll('th[data-column]').forEach(th => {
+        th.textContent = th.textContent.replace(/ ▲| ▼/g, '');
+        const col = parseInt(th.getAttribute('data-column'));
+        if (col === currentSort.column) {
+          th.textContent += currentSort.ascending ? ' ▲' : ' ▼';
+        }
+      });
+    }
+
+    document.querySelectorAll('th[data-column]').forEach(th => {
+      th.addEventListener('click', () => {
+        const columnIndex = parseInt(th.getAttribute('data-column'));
+        sortTable(columnIndex);
+      });
     });
 
     fetchCompetitions();
   </script>
 </body>
 </html>
-
-<!-- commit kecil untuk trigger rebuild -->
