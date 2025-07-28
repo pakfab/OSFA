@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>DATABASE ONE STUDENT FOUR ACHIEVEMENT</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Perbaiki meta viewport -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <div class="container mx-auto py-8 px-2 sm:px-4 lg:px-8">
+    <h1 class="text-2xl sm:text-4xl font-bold mb-2 text-center text-indigo-700">DATABASE ONE STUDENT FOUR ACHIEVEMENT</h1>
+    <p class="text-base sm:text-lg text-center mb-8 text-gray-700">Competition Update for Student of SMA Islam Al Azhar 16 Semarang</p>
+    <div class="mb-4 flex flex-col sm:flex-row justify-end">
+      <input id="search" type="text" placeholder="Cari lomba atau bidang..." class="border px-3 py-2 rounded w-full sm:w-1/3 mb-2 sm:mb-0" />
+    </div>
+    <div class="bg-white rounded shadow overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200 text-xs sm:text-sm">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold">BIDANG</th>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold">PENYELENGGARA</th>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold">NAMA LOMBA</th>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold">PENDAFTARAN</th>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold">DEADLINE</th>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold">PELAKSANAAN</th>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold">LINK</th>
+            <th class="px-2 sm:px-4 py-2 text-left font-bold">BIAYA</th>
+          </tr>
+        </thead>
+        <tbody id="competition-body" class="bg-white divide-y divide-gray-200">
+          <tr>
+            <td colspan="8" class="text-center py-8 text-gray-500">Memuat data...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-4 text-xs sm:text-sm text-gray-500 text-center">TIM KEMURIDAN SMA ISLAM AL AZHAR 16 SEMARANG @2025.</p>
+  </div>
+  <script>
+    // Ganti dengan ID dan API Key spreadsheet kamu
+    const SPREADSHEET_ID = '1gOYHXppCIeZ6P6KF5EaUeCQ_jmOxqHg--So6l5qFpYY';
+    const API_KEY = 'AIzaSyB3bmGApM7NO4jjwi3eOKCNhUkvDkMwyKw';
+    const RANGE = 'RUNNING!B3:K'; // Nama sheet dan range
+
+    let competitions = [];
+
+    async function fetchCompetitions() {
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`;
+      const response = await fetch(url);
+      const result = await response.json();
+      competitions = result.values || [];
+      renderTable(competitions);
+    }
+
+    function renderTable(data) {
+      const tbody = document.getElementById('competition-body');
+      tbody.innerHTML = '';
+      if (data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-gray-500">Tidak ada data lomba.</td></tr>`;
+        return;
+      }
+      data.forEach((row, i) => {
+        const [field, organizer, name, regDate, deadline, eventDate, link, fee] = row;
+        // Cek dan tambahkan https:// hanya jika link tidak diawali http/https
+        let fixedLink = link;
+        if (link && !/^https?:\/\//i.test(link)) {
+          fixedLink = 'https://' + link;
+        }
+        const tr = document.createElement('tr');
+        tr.className = i % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+        tr.innerHTML = `
+          <td class="px-4 py-2">${field || '-'}</td>
+          <td class="px-4 py-2">${organizer || '-'}</td>
+          <td class="px-4 py-2">${name || '-'}</td>
+          <td class="px-4 py-2">${regDate || '-'}</td>
+          <td class="px-4 py-2">${deadline || '-'}</td>
+          <td class="px-4 py-2">${eventDate || '-'}</td>
+          <td class="px-4 py-2">${link ? `<a href="${fixedLink}" target="_blank" class="text-blue-600 underline">Daftar</a>` : '-'}</td>
+          <td class="px-4 py-2">${fee || '-'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById('search').addEventListener('input', function(e) {
+      const keyword = e.target.value.toLowerCase();
+      const filtered = competitions.filter(row =>
+        row[0]?.toLowerCase().includes(keyword) || // Nama Lomba
+        row[1]?.toLowerCase().includes(keyword)    // Bidang
+      );
+      renderTable(filtered);
+    });
+
+    fetchCompetitions();
+  </script>
+</body>
+</html>
