@@ -37,19 +37,22 @@
     <p class="mt-4 text-xs sm:text-sm text-gray-500 text-center">SMA ISLAM AL AZHAR 16 SEMARANG @2025</p>
   </div>
   <script>
-    const SPREADSHEET_ID = '1gOYHXppCIeZ6P6KF5EaUeCQ_jmOxqHg--So6l5qFpYY';
-    const API_KEY = 'AIzaSyB3bmGApM7NO4jjwi3eOKCNhUkvDkMwyKw';
-    const RANGE = 'RUNNING!B3:K';
-
     let competitions = [];
     let currentSort = { column: null, ascending: true };
 
     async function fetchCompetitions() {
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`;
-      const response = await fetch(url);
-      const result = await response.json();
-      competitions = result.values || [];
-      renderTable(competitions);
+      // Replace with your Google Apps Script Web App URL
+      const url = 'https://script.google.com/macros/s/AKfycbx9N3nCQYN7XmvluLAi4osjR6K82-HVgm_XeihfBhHp_31QGsealbuL9bLxrh_Yqnf4/exec?app=running';
+      try {
+        const response = await fetch(url);
+        const result = await response.json();
+        competitions = result.values || [];
+        renderTable(competitions);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        document.getElementById('competition-body').innerHTML = 
+          `<tr><td colspan="8" class="text-center py-8 text-red-500">Gagal memuat data. Silakan coba lagi nanti.</td></tr>`;
+      }
     }
 
     function renderTable(data) {
