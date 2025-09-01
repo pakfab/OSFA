@@ -174,171 +174,6 @@
         }
         
         .student-class {
-            background: rgba(255,255,255,0.2);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .card-content {
-            padding: 24px;
-        }
-        
-        .section {
-            margin-bottom: 20px;
-        }
-        
-        .section:last-child {
-            margin-bottom: 0;
-        }
-        
-        .section-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .achievement-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .achievement-list li {
-            background: #f0f9ff;
-            border-left: 4px solid #3b82f6;
-            padding: 12px 16px;
-            margin-bottom: 8px;
-            border-radius: 0 6px 6px 0;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        .category-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .category-tag {
-            background: #fef3c7;
-            color: #92400e;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
-            border: 1px solid #fbbf24;
-        }
-        
-        .no-data {
-            color: #6b7280;
-            font-style: italic;
-            margin: 0;
-            padding: 12px;
-            background: #f9fafb;
-            border-radius: 6px;
-            text-align: center;
-        }
-        /* CSS yang sudah ada */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .search-container {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-            position: relative;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .search-container .label {
-            font-size: 15px;
-            padding-left: 10px;
-            position: absolute;
-            top: 13px;
-            transition: 0.3s;
-            pointer-events: none;
-            color: #666;
-        }
-
-        .search-container .input {
-            width: 100%;
-            height: 45px;
-            border: none;
-            outline: none;
-            padding: 0px 7px;
-            border-radius: 6px;
-            color: #333;
-            font-size: 15px;
-            background-color: #f9f9f9;
-            box-shadow: 3px 3px 10px rgba(0,0,0,0.1),
-            -1px -1px 6px rgba(255, 255, 255, 0.4);
-        }
-
-        .search-container .input:focus {
-            border: 2px solid transparent;
-            color: #333;
-            box-shadow: 3px 3px 10px rgba(0,0,0,0.1),
-            -1px -1px 6px rgba(255, 255, 255, 0.4),
-            inset 3px 3px 10px rgba(0,0,0,0.1),
-            inset -1px -1px 6px rgba(255, 255, 255, 0.4);
-        }
-
-        .search-container .input:valid ~ .label,
-        .search-container .input:focus ~ .label {
-            transition: 0.3s;
-            padding-left: 2px;
-            transform: translateY(-35px);
-            color: #666;
-        }
-
-        .search-container .input:valid,
-        .search-container .input:focus {
-            box-shadow: 3px 3px 10px rgba(0,0,0,0.1),
-            -1px -1px 6px rgba(255, 255, 255, 0.4),
-            inset 3px 3px 10px rgba(0,0,0,0.1),
-            inset -1px -1px 6px rgba(255, 255, 255, 0.4);
-        }
-
-        .student-card-new {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            overflow: hidden;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        
-        .student-card-new:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        }
-        
-        .card-header {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .student-name-card {
-            font-size: 20px;
-            font-weight: 700;
-            margin: 0;
-        }
-        
-        .student-class {
             background: rgba(219, 126, 126, 0.2);
             padding: 6px 12px;
             border-radius: 20px;
@@ -410,18 +245,87 @@
             border-radius: 6px;
             text-align: center;
         }
+
         .table-container {
-          overflow-x: auto;
-          margin: 20px;
+            overflow-x: auto;
+            margin: 20px;
         }
+
         table {
-          width: 100%;
-          border-collapse: collapse;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .card {
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            border-radius: 9px;
+            border: solid 1px #202222;
+            background-size: 20px 20px;
+            background: radial-gradient(circle 280px at 0% 0%, #444444, #0c0d0d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-direction: column;
+            color: #fff;
+        }
+
+        .ray {
+            width: 220px;
+            height: 45px;
+            border-radius: 100px;
+            position: absolute;
+            background-color: #c7c7c7;
+            opacity: 0.4;
+            box-shadow: 0 0 50px #fff;
+            filter: blur(10px);
+            transform-origin: 10%;
+            top: 0%;
+            left: 0;
+            transform: rotate(40deg);
+        }
+
+        .card .text {
+            font-weight: bolder;
+            font-size: 4rem;
+            background: linear-gradient(45deg, #000000 4%, #fff, #000);
+            background-clip: text;
+            color: transparent;
+        }
+
+        .line {
+            width: 100%;
+            height: 1px;
+            position: absolute;
+            background-color: #2c2c2c;
+        }
+
+        .topl {
+            top: 10%;
+            background: linear-gradient(90deg, #888888 30%, #1d1f1f 70%);
+        }
+
+        .bottoml {
+            bottom: 10%;
+        }
+
+        .leftl {
+            left: 10%;
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(180deg, #747474 30%, #222424 70%);
+        }
+
+        .rightl {
+            right: 10%;
+            width: 1px;
+            height: 100%;
         }
     </style>
 </head>
-
-<body class="bg-gray-50">
+<body class="bg-gray-50 min-h-screen">
     <!-- Header -->
     <header class="bg-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -429,29 +333,17 @@
                 <!-- Logo -->
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                            </svg>
-                        </div>
-                        <span class="ml-3 text-xl font-bold text-gray-900">One To Four</span>
+                        <img src="https://raw.githubusercontent.com/pakfab/portoku/main/logo-osfa.png" alt="Logo" class="w-100 h-10 rounded-lg object-cover" />
+                        <span class="ml-3 text-xl font-bold text-gray-900"> </span>
                     </div>
                 </div>
-
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-8">
                     <a href="#" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Halaman Utama</a>
                     <a href="https://osfa.fabfibfub.my.id" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Database Lomba</a>
                     <a href="https://portofolio.fabfibfub.my.id" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Portofolioku</a>
                 </nav>
-
                 <!-- Desktop CTA Button -->
-                <div class="hidden md:flex items-center space-x-4">
-                    <button class="cta-button text-white px-6 py-2 rounded-lg text-sm font-medium">
-                        Get Started
-                    </button>
-                </div>
-
                 <!-- Mobile menu button -->
                 <div class="md:hidden">
                     <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 focus:outline-none focus:text-blue-600 p-2">
@@ -462,7 +354,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Mobile Navigation Menu -->
         <div id="mobile-menu" class="mobile-menu md:hidden fixed inset-y-0 left-0 w-64 bg-white shadow-xl z-50">
             <div class="flex items-center justify-between p-4 border-b">
@@ -484,16 +375,11 @@
                 <a href="#" class="block text-gray-700 hover:text-blue-600 py-2 text-base font-medium border-b border-gray-100">Halaman Utama</a>
                 <a href="https://osfa.fabfibfub.my.id" class="block text-gray-700 hover:text-blue-600 py-2 text-base font-medium border-b border-gray-100">Database Lomba</a>
                 <a href="https://portofolio.fabfibfub.my.id" class="block text-gray-700 hover:text-blue-600 py-2 text-base font-medium border-b border-gray-100">Portofolioku</a>
-                <button class="w-full cta-button text-white px-6 py-3 rounded-lg text-base font-medium mt-6">
-                    Get Started
-                </button>
             </nav>
         </div>
-
         <!-- Mobile menu overlay -->
         <div id="menu-overlay" class="hidden md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"></div>
     </header>
-
 <body class="bg-gray-50 min-h-screen">
   <div class="container mx-auto py-8 px-2 sm:px-4 lg:px-8">
   <h1 class="text-2xl sm:text-4xl font-bold mb-2 text-center text-indigo-700">DATABASE ONE STUDENT FOUR ACHIEVEMENT</h1>
